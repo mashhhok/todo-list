@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { InputForm } from "../../components/InputForm/InputForm";
-import { Todo } from "../../types";
+import { TodoI } from "../../types";
 
 // export interface Props {
 //
@@ -20,13 +20,13 @@ import { Todo } from "../../types";
 // })
 
 const Main = () => {
-  const [todos, setTodos] = useState<Todo[]>([]);
-  const [value, setValue] = useState("");
+  const [todos, setTodos] = useState<TodoI[]>([]);
 
-  const addTodo = (todoItem: Todo): void => {
+  const addToList = (todoItem: string): void => {
     if (todoItem) {
-      setTodos((todos) => [todoItem, ...todos]);
-      setValue("");
+      if (todoItem.trim().length === 0) return
+      const newTodo = { id: Date.now(), name: todoItem, complete: false }
+      setTodos([...todos, newTodo]);
       // setAllTodos(allTodos + 1);
     } else {
       alert("please, type the text");
@@ -35,7 +35,7 @@ const Main = () => {
 
   return (
     <div>
-      <InputForm value={value} setValue={setValue} addTodo={addTodo} />
+      <InputForm addTodo={addToList}/>
       {todos.map((todo) => (
         <li>{todo.name}</li>
       ))}

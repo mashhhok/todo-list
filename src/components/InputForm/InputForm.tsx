@@ -1,25 +1,16 @@
-import React, { useRef } from "react";
-import { Todo } from "../../types";
+import React, {useState} from "react";
 
 export interface FormProps {
-  value: string;
-  setValue: any; //React.Dispatch<React.SetStateAction<string>>
-  addTodo: (todoItem: Todo) => void;
+  addTodo: (inputValue: string) => void
 }
 
 export const InputForm: React.FC<FormProps> = (props) => {
-  const todoTextInputRef = useRef<HTMLInputElement>(null);
+  const [value, setValue] = useState("");
 
   const submitHandler = (event: React.FormEvent) => {
     event.preventDefault();
-    const enteredText = todoTextInputRef.current!.value;
-    if (enteredText.trim().length === 0) return;
-    const newTodo = { id: Date.now(), name: enteredText, complete: false };
-    props.addTodo(newTodo);
-  };
-
-  const changeHandler = (event: React.ChangeEvent<HTMLInputElement>) => {
-    props.setValue(event.target.value);
+    props.addTodo(value)
+    setValue('')
   };
 
   // const toggleTodo = (id: any) => {
@@ -43,10 +34,10 @@ export const InputForm: React.FC<FormProps> = (props) => {
     >
       <div>
         <input
-          ref={todoTextInputRef}
+            placeholder={'Please, add the text'}
           type="text"
-          value={props.value}
-          onChange={changeHandler}
+          value={value}
+          onChange={(event) => setValue(event.target.value)}
         />
         <button type="submit">&rarr;</button>
       </div>

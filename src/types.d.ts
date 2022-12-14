@@ -1,4 +1,4 @@
-export interface Todo {
+export interface TodoI {
     id: number
     name: string
     complete: boolean
