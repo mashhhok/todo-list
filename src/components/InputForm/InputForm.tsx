@@ -1,67 +1,55 @@
-import React, {useState} from "react";
-import {Todo} from '../../types'
+import React, { useRef } from "react";
+import { Todo } from "../../types";
 
-export interface FormProps  {
-    value: string
-    setValue: any //React.Dispatch<React.SetStateAction<string>>
-    onSubmit: () => void
+export interface FormProps {
+  value: string;
+  setValue: any; //React.Dispatch<React.SetStateAction<string>>
+  addTodo: (todoItem: Todo) => void;
 }
 
-export const InputForm:React.FC<FormProps> =  (props) => {
-    const [todos, setTodos] = useState<Todo[]>([]);
-    const [value, setValue] = useState('');
-    // const [complete, setComplete] = useState()
+export const InputForm: React.FC<FormProps> = (props) => {
+  const todoTextInputRef = useRef<HTMLInputElement>(null);
 
-    const handleSubmit = (event: React.FormEvent) => {
-        event.preventDefault()
-        props.onSubmit()
-    }
+  const submitHandler = (event: React.FormEvent) => {
+    event.preventDefault();
+    const enteredText = todoTextInputRef.current!.value;
+    if (enteredText.trim().length === 0) return;
+    const newTodo = { id: Date.now(), name: enteredText, complete: false };
+    props.addTodo(newTodo);
+  };
 
-    const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-        props.setValue(event.target.value)
-    }
+  const changeHandler = (event: React.ChangeEvent<HTMLInputElement>) => {
+    props.setValue(event.target.value);
+  };
 
-    // const toggleTodo = (id: any) => {
-    //     setTodos(
-    //         todos.map((todo) => {
-    //             if (todo.id !== id) return todo;
-    //
-    //             return {
-    //                 ...todo,
-    //                 done: !todo.done,
-    //             };
-    //         })
-    //     );
-    // };
+  // const toggleTodo = (id: any) => {
+  //     setTodos(
+  //         todos.map((todo) => {
+  //             if (todo.id !== id) return todo;
+  //
+  //             return {
+  //                 ...todo,
+  //                 done: !todo.done,
+  //             };
+  //         })
+  //     );
+  // };
 
-    const addTodo = (toDoItem: Todo): void  => {
-        if (toDoItem) {
-            const newTodo = {id: Date.now(), name: value, complete: false}
-            setTodos(todos=>[...todos, newTodo]);
-            // setAllTodos(allTodos + 1);
-        } else {
-            alert("please, type the text");
-        }
-    };
-
-    return (
-        <form
-            onSubmit={(event) => {
-                handleSubmit(event)
-            }}
-        >
-            <div>
-                <input
-                    type="text"
-                    placeholder="Insert the text here..."
-                    //value={value}
-                    onChange={(event) => handleChange(event)}
-                    required
-                />
-                <button type="submit">
-                    &rarr;
-                </button>
-            </div>
-        </form>
-    );
+  return (
+    <form
+      onSubmit={(event) => {
+        submitHandler(event);
+      }}
+    >
+      <div>
+        <input
+          ref={todoTextInputRef}
+          type="text"
+          value={props.value}
+          onChange={changeHandler}
+        />
+        <button type="submit">&rarr;</button>
+      </div>
+    </form>
+  );
 };
