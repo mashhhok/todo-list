@@ -1,6 +1,6 @@
-import React, {useState} from 'react'
-import {InputForm} from "../../components/InputForm/InputForm";
-import {Todo} from "../../types";
+import React, { useState } from "react";
+import { InputForm } from "../../components/InputForm/InputForm";
+import { Todo } from "../../types";
 
 // export interface Props {
 //
@@ -20,10 +20,27 @@ import {Todo} from "../../types";
 // })
 
 const Main = () => {
-    return (
-        // <InputForm value={value} setValue={} onSubmit={}/>
-        <div>Main</div>
-    )
-}
+  const [todos, setTodos] = useState<Todo[]>([]);
+  const [value, setValue] = useState("");
 
-export default Main
+  const addTodo = (todoItem: Todo): void => {
+    if (todoItem) {
+      setTodos((todos) => [todoItem, ...todos]);
+      setValue("");
+      // setAllTodos(allTodos + 1);
+    } else {
+      alert("please, type the text");
+    }
+  };
+
+  return (
+    <div>
+      <InputForm value={value} setValue={setValue} addTodo={addTodo} />
+      {todos.map((todo) => (
+        <li>{todo.name}</li>
+      ))}
+    </div>
+  );
+};
+
+export default Main;
