@@ -21,9 +21,7 @@ import { TodoI } from "../../types";
 // })
 
 const Main = () => {
-  const [todos, setTodos] = useState<TodoI[]>([
-    { id: 1, name: "text", complete: false },
-  ]);
+  const [todos, setTodos] = useState<TodoI[]>([]);
 
   const addToList = (todoItemText: string): void => {
     if (todoItemText) {
@@ -39,7 +37,7 @@ const Main = () => {
   return (
     <div>
       <InputForm addTodo={addToList} />
-      <TodoList todos={todos} />
+      <TodoList todos={todos} setTodos={setTodos} />
       {/* {todos.map((todo) => (
         <li>{todo.name}</li>
       ))} */}
