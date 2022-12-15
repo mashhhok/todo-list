@@ -8,6 +8,7 @@ interface TodoItemProps {
 }
 
 export const TodoItem: React.FC<TodoItemProps> = (props) => {
+
   const toggleTodo = (id: number) => {
     props.setTodos(
       props.todos.map((todo) => {
@@ -20,10 +21,16 @@ export const TodoItem: React.FC<TodoItemProps> = (props) => {
     );
   };
 
+  const removeTodo = (id: number) => {
+        props.setTodos(props.todos.filter((todo) => todo.id !== id));
+        //setAllTodos(allTodos - 1);
+    };
+
   return (
     <li>
       {props.todo.name}
       <input type="checkbox" onClick={() => toggleTodo(props.todo.id)}></input>
+        <button onClick={()=> removeTodo(props.todo.id)}>x</button>
     </li>
   );
 };

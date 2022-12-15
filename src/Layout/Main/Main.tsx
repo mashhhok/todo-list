@@ -1,24 +1,7 @@
-import React, { useState } from "react";
-import { InputForm } from "../../components/InputForm/InputForm";
-import { TodoList } from "../../components/TodoList/TodoList";
-import { TodoI } from "../../types";
-
-// export interface Props {
-//
-// }
-//
-// export const Main:React.FC<Props> = ({
-//
-//     // const handleSubmit = () => {
-//     //     putTodo(value)
-//     //     setValue('')
-//     // }
-//     return (
-// <div>
-//     <ImportForm value={value} setValue={setValue} onSubmit={handleSubmit}/>
-// </div>
-// );
-// })
+import React, { useState } from "react"
+import { InputForm } from "../../components/InputForm/InputForm"
+import { TodoList } from '../../components/ToDoList/TodoList'
+import { TodoI } from "../../types"
 
 const Main = () => {
   const [todos, setTodos] = useState<TodoI[]>([]);
