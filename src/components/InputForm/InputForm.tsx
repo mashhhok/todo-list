@@ -1,7 +1,7 @@
-import React, {useState} from "react";
+import React, { useState } from "react";
 
 export interface FormProps {
-  addTodo: (inputValue: string) => void
+  addTodo: (inputValue: string) => void;
 }
 
 export const InputForm: React.FC<FormProps> = (props) => {
@@ -9,8 +9,8 @@ export const InputForm: React.FC<FormProps> = (props) => {
 
   const submitHandler = (event: React.FormEvent) => {
     event.preventDefault();
-    props.addTodo(value)
-    setValue('')
+    props.addTodo(value);
+    setValue("");
   };
 
   // const toggleTodo = (id: any) => {
@@ -34,7 +34,7 @@ export const InputForm: React.FC<FormProps> = (props) => {
     >
       <div>
         <input
-            placeholder={'Please, add the text'}
+          placeholder={"Please, add the text"}
           type="text"
           value={value}
           onChange={(event) => setValue(event.target.value)}
