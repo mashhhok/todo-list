@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { InputForm } from "../../components/InputForm/InputForm";
-import { TodoList } from "../../components/TodoList/TodoList";
+import { TodoList } from '../../components/ToDoList/TodoList'
 import { TodoI } from "../../types";
 
 const Main = () => {
