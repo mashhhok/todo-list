@@ -3,17 +3,27 @@ import { TodoI } from "../../types";
 import { TodoItem } from "../TodoItem/TodoItem";
 type TodoItemsList = {
   todos: TodoI[];
-  setTodos: any;
+  setTodos: (todos: TodoI[]) => void;
 };
 export const TodoList: React.FC<TodoItemsList> = (props) => {
+
+  const {todos, setTodos} = props
+
+  const removeTodo = (id: number) => {
+    const removedToDo = todos.filter((todo) => todo.id !== id)
+    setTodos(removedToDo);
+    //setAllTodos(allTodos - 1);
+  };
+
   return (
     <ul>
-      {props.todos.map((todo) => (
+      {todos.map((todo) => (
         <TodoItem
           key={todo.id}
           todo={todo}
-          todos={props.todos}
-          setTodos={props.setTodos}
+          setTodo={(item)=>{
+            setTodos([...todos, item])}}
+          removeItem={(id)=>removeTodo(id)}
         />
       ))}
     </ul>
