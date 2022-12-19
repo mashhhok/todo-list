@@ -1,15 +1,14 @@
 import React, { useState } from "react";
 import { TodoI } from "../../types";
-
 interface TodoItemProps {
     todo: TodoI;
     setTodo: (todo: TodoI) => void;
   removeItem: (id: number)=> void
 }
-
 export const TodoItem: React.FC<TodoItemProps> = (props) => {
   const [isEditingID, setIsEditingID] = useState<number>(0);
-  const [editingText, setEditingText] = useState<string>(props.todo.name);
+
+  const [editingText, setEditingText] = useState<string>("");
 
   const toggleTodo = (id: number) => {
     //   const togglingToDo =
@@ -23,33 +22,49 @@ export const TodoItem: React.FC<TodoItemProps> = (props) => {
     // props.setTodos(togglingToDo);
   };
 
+  const removeTodo = (id: number) => {
+    props.setTodos(props.todos.filter((todo) => todo.id !== id));
+    //setAllTodos(allTodos - 1);
+  };
+  const editTodo = (id: number, todoItemText: string) => {
+    props.setTodos(
+      props.todos.map((todo) => {
+        if (todo.id !== id) return todo;
+        return {
+          ...todo,
+          name: todoItemText,
+        };
+      })
+    );
+  };
   const changeHandler = (event: React.ChangeEvent<HTMLInputElement>) => {
     setEditingText(event.target.value);
-  }
-
-  const submitHandler = () => {
-      props.setTodo({id: props.todo.id, name: editingText, complete: props.todo.complete})
   };
-
+  const submitHandler = (event: React.FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+    editTodo(props.todo.id, editingText);
+    setIsEditingID(0);
+  };
   return (
     <li>
       {isEditingID === props.todo.id ? (
-          <form
-              onSubmit={() => {submitHandler();
-              }}
-          >
-        <input
-          type="text"
-          value={editingText}
-          onChange={(event) => changeHandler(event)}
-          onSubmit={() => submitHandler}
-        />
-          </form>
+        <form onSubmit={(event) => submitHandler(event)}>
+          <input
+            type="text"
+            value={editingText}
+            onChange={(event) => changeHandler(event)}
+            onSubmit={() => submitHandler}
+            required
+          />
+        </form>
+
       ) : (
         <span>{props.todo.name}</span>
       )}
       <input type="checkbox" onClick={() => toggleTodo(props.todo.id)}></input>
-      <button onClick={() => props.removeItem(props.todo.id)}>x</button>
+
+      <button onClick={() => removeTodo(props.todo.id)}>x</button>
+
       <button onClick={() => setIsEditingID(props.todo.id)}>u</button>
     </li>
   );

@@ -1,12 +1,10 @@
 import React from "react";
 import { TodoI } from "../../types";
 import { TodoItem } from "../TodoItem/TodoItem";
-
 type TodoItemsList = {
   todos: TodoI[];
   setTodos: (todos: TodoI[]) => void;
 };
-
 export const TodoList: React.FC<TodoItemsList> = (props) => {
 
   const {todos, setTodos} = props

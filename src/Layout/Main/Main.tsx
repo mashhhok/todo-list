@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { InputForm } from "../../components/InputForm/InputForm";
+
 import { TodoList } from '../../components/ToDoList/TodoList'
 import { TodoI } from "../../types";
 
@@ -18,7 +19,6 @@ const Main = () => {
       alert("please, type the text");
     }
   };
-
   return (
     <div>
       <InputForm addTodo={addToList} />
@@ -29,5 +29,4 @@ const Main = () => {
     </div>
   );
 };
-
 export default Main;
