@@ -1,12 +1,8 @@
-import React from 'react'
-import { LayoutHeader } from './header.styles'
+import React from "react";
+import { LayoutHeader } from "./header.styles";
 
 const Header = () => {
-    return (
-        <LayoutHeader>
-            ToDoList
-        </LayoutHeader>
-    )
-}
+  return <LayoutHeader>ToDoList</LayoutHeader>;
+};
 
-export default Header
+export default Header;
