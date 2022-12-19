@@ -2,12 +2,10 @@ import React, { useState } from "react";
 import { InputForm } from "../../components/InputForm/InputForm";
 import { TodoList } from "../../components/TodoList/TodoList";
 import { TodoI } from "../../types";
-
 const Main = () => {
   const [todos, setTodos] = useState<TodoI[]>([]);
-  // const [isEditingID, setIsEditingID] = useState<string>("");
-  // const [editingText, setEditingText] = useState<string>("");
-
+  // const [isEditingID, setIsEditingID] = useState<string>(“”);
+  // const [editingText, setEditingText] = useState<string>(“”);
   const addToList = (todoItemText: string): void => {
     if (todoItemText) {
       if (todoItemText.trim().length === 0) return;
@@ -18,7 +16,6 @@ const Main = () => {
       alert("please, type the text");
     }
   };
-
   return (
     <div>
       <InputForm addTodo={addToList} />
@@ -29,5 +26,4 @@ const Main = () => {
     </div>
   );
 };
-
 export default Main;

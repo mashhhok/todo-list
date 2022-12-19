@@ -1,16 +1,13 @@
 import React, { useState } from "react";
 import { TodoI } from "../../types";
-
 interface TodoItemProps {
   todo: TodoI;
   todos: TodoI[];
   setTodos: any;
 }
-
 export const TodoItem: React.FC<TodoItemProps> = (props) => {
   const [isEditingID, setIsEditingID] = useState<number>(0);
   const [editingText, setEditingText] = useState<string>("");
-
   const toggleTodo = (id: number) => {
     props.setTodos(
       props.todos.map((todo) => {
@@ -22,12 +19,10 @@ export const TodoItem: React.FC<TodoItemProps> = (props) => {
       })
     );
   };
-
   const removeTodo = (id: number) => {
     props.setTodos(props.todos.filter((todo) => todo.id !== id));
     //setAllTodos(allTodos - 1);
   };
-
   const editTodo = (id: number, todoItemText: string) => {
     props.setTodos(
       props.todos.map((todo) => {
@@ -39,17 +34,14 @@ export const TodoItem: React.FC<TodoItemProps> = (props) => {
       })
     );
   };
-
   const changeHandler = (event: React.ChangeEvent<HTMLInputElement>) => {
     setEditingText(event.target.value);
   };
-
   const submitHandler = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     editTodo(props.todo.id, editingText);
     setIsEditingID(0);
   };
-
   return (
     <li>
       {isEditingID === props.todo.id ? (
