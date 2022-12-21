@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { FilterTodo } from "../../components/FilterTodo/FilterTodo";
 import { InputForm } from "../../components/InputForm/InputForm";
 
-import { TodoList } from "../../components/ToDoList/TodoList";
+import { TodoList } from "../../components/TodoList/TodoList";
 
 import { TodoI } from "../../types";
 
