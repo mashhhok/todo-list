@@ -10,9 +10,27 @@ type TodoItemsList = {
 };
 
 export const TodoList: React.FC<TodoItemsList> = (props) => {
+  const getTodos = (status: string) => {
+    return props.filteredTodos.length !== 0 && props.status === status ? (
+      <ul>
+        {props.filteredTodos.map((todo) => (
+          <TodoItem
+            key={todo.id}
+            todo={todo}
+            todos={props.todos}
+            setTodos={props.setTodos}
+          />
+        ))}
+      </ul>
+    ) : (
+      <div>{status} Todos is empty!</div>
+    );
+  };
+
   return (
     <div>
-      {props.filteredTodos.length === 0 && props.status === "all" ? ( // Check for all todo tasks
+      {getTodos(props.status)}
+      {/* {props.filteredTodos.length === 0 && props.status === "all" ? ( // Check for all todo tasks
         <p>Todos is empty!</p>
       ) : props.filteredTodos.length === 0 && props.status === "active" ? ( // Check for active tasks
         <p>You have no active tasks!</p>
@@ -29,7 +47,7 @@ export const TodoList: React.FC<TodoItemsList> = (props) => {
             />
           ))}
         </ul>
-      )}
+      )} */}
     </div>
   );
 };
