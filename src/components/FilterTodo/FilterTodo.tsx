@@ -1,5 +1,7 @@
 import React from "react";
+import { StyledButton } from "../../style";
 import { TodoI } from "../../types";
+import { FilterTodoContainer } from "./FilterTodo.styles";
 
 interface FilterTodoProps {
   setStatus: any;
@@ -7,14 +9,24 @@ interface FilterTodoProps {
 }
 
 export const FilterTodo: React.FC<FilterTodoProps> = (props) => {
-  return (
-    <div>
-      <div>{props.filteredTodos.length}</div>
+  const filterTodo = () => {
+    return (
       <div>
-        <button onClick={() => props.setStatus("all")}>All</button>
-        <button onClick={() => props.setStatus("active")}>Active</button>
-        <button onClick={() => props.setStatus("completed")}>Completed</button>
+        <StyledButton onClick={() => props.setStatus("all")}>All</StyledButton>
+        <StyledButton onClick={() => props.setStatus("active")}>
+          Active
+        </StyledButton>
+        <StyledButton onClick={() => props.setStatus("completed")}>
+          Completed
+        </StyledButton>
       </div>
-    </div>
+    );
+  };
+
+  return (
+    <FilterTodoContainer>
+      <div>{props.filteredTodos.length} items left</div>
+      {filterTodo()}
+    </FilterTodoContainer>
   );
 };

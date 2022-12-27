@@ -1,6 +1,7 @@
 import React from "react";
 import { TodoI } from "../../types";
 import { TodoItem } from "../TodoItem/TodoItem";
+import { StyleUl } from "./Todolist.styles";
 
 type TodoItemsList = {
   todos: TodoI[];
@@ -12,7 +13,7 @@ type TodoItemsList = {
 export const TodoList: React.FC<TodoItemsList> = (props) => {
   const getTodos = (status: string) => {
     return props.filteredTodos.length !== 0 && props.status === status ? (
-      <ul>
+      <StyleUl>
         {props.filteredTodos.map((todo) => (
           <TodoItem
             key={todo.id}
@@ -21,7 +22,7 @@ export const TodoList: React.FC<TodoItemsList> = (props) => {
             setTodos={props.setTodos}
           />
         ))}
-      </ul>
+      </StyleUl>
     ) : (
       <div>{status} Todos is empty!</div>
     );
