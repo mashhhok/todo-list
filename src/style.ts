@@ -1,5 +1,5 @@
-import styled, { css } from 'styled-components'
-import {theme} from "./ui/src/lib/config/theme";
+import styled, { css } from "styled-components";
+import { theme } from "./ui/src/lib/config/theme";
 
 export const base = {
   textInput: css`
@@ -18,4 +18,23 @@ export const base = {
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
   `,
-}
+};
+
+export const StyledButton = styled.button`
+   {
+    background-color: inherit;
+    color: inherit;
+    margin: 3px;
+    padding: 3px 7px;
+    text-decoration: none;
+    border: 1px solid transparent;
+    border-radius: 3px;
+    font-size: 16px;
+    &:hover {
+      border: 1px solid rgba(175, 47, 47, 0.1);
+    }
+    &:focus {
+      border: 1px solid rgba(175, 47, 47, 0.2);
+    }
+  }
+`;
