@@ -31,6 +31,7 @@ export const StyledButton = styled.button`
     border-radius: 3px;
     font-size: 16px;
     &:hover {
+      cursor: pointer;
       border: 1px solid rgba(175, 47, 47, 0.1);
     }
     &:focus {

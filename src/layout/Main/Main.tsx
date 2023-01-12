@@ -8,17 +8,16 @@ import { TodoI } from "../../types";
 
 const Main = () => {
   const [todos, setTodos] = useState<TodoI[]>([]);
-  // const [allComplete, setAllComplete] = useState<number>(0);
 
-  const [status, setStatus] = useState("all");
+  const [status, setStatus] = useState("All");
   const [filteredTodos, setFilteredTodos] = useState<TodoI[]>([]);
 
   const filterHandler = () => {
     switch (status) {
-      case "completed":
+      case "Completed":
         setFilteredTodos(todos.filter((todo) => todo.complete === true));
         break;
-      case "active":
+      case "Active":
         setFilteredTodos(todos.filter((todo) => todo.complete === false));
         break;
       default:

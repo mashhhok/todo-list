@@ -1,7 +1,13 @@
 import React, { useState } from "react";
-import { StyledButton } from "../../style";
 import { TodoI } from "../../types";
+
 import { TodoItemContainer } from "./todoItem.styles";
+import { ControlElemsContainer } from "./todoItem.styles";
+import { StyledInput } from "./todoItem.styles";
+
+import DoneIcon from "@mui/icons-material/Done";
+import DeleteIcon from "@mui/icons-material/Delete";
+import EditIcon from "@mui/icons-material/Edit";
 
 interface TodoItemProps {
   todo: TodoI;
@@ -11,7 +17,7 @@ interface TodoItemProps {
 
 export const TodoItem: React.FC<TodoItemProps> = (props) => {
   const [isEditingID, setIsEditingID] = useState<number>(0);
-  const [editingText, setEditingText] = useState<string>("");
+  const [editingText, setEditingText] = useState<string>(props.todo.name);
 
   const toggleTodo = (id: number) => {
     props.setTodos(
@@ -27,7 +33,6 @@ export const TodoItem: React.FC<TodoItemProps> = (props) => {
 
   const removeTodo = (id: number) => {
     props.setTodos(props.todos.filter((todo) => todo.id !== id));
-    //setAllTodos(allTodos - 1);
   };
 
   const editTodo = (id: number, todoItemText: string) => {
@@ -54,16 +59,26 @@ export const TodoItem: React.FC<TodoItemProps> = (props) => {
 
   const getControlElems = () => {
     return (
-      <div>
-        <input
-          type="checkbox"
-          onClick={() => toggleTodo(props.todo.id)}
-        ></input>
-        <StyledButton onClick={() => removeTodo(props.todo.id)}>x</StyledButton>
-        <StyledButton onClick={() => setIsEditingID(props.todo.id)}>
-          u
-        </StyledButton>
-      </div>
+      <ControlElemsContainer>
+        <span>
+          <DoneIcon
+            fontSize="small"
+            onClick={() => toggleTodo(props.todo.id)}
+          ></DoneIcon>
+        </span>
+        <span>
+          <DeleteIcon
+            fontSize="small"
+            onClick={() => removeTodo(props.todo.id)}
+          ></DeleteIcon>
+        </span>
+        <span>
+          <EditIcon
+            fontSize="small"
+            onClick={() => setIsEditingID(props.todo.id)}
+          ></EditIcon>
+        </span>
+      </ControlElemsContainer>
     );
   };
 
@@ -72,12 +87,11 @@ export const TodoItem: React.FC<TodoItemProps> = (props) => {
       <li>
         {isEditingID === props.todo.id ? (
           <form onSubmit={(event) => submitHandler(event)}>
-            <input
+            <StyledInput
               type="text"
               value={editingText}
               onChange={(event) => changeHandler(event)}
-              onSubmit={() => submitHandler}
-              required
+              autoFocus
             />
           </form>
         ) : (
