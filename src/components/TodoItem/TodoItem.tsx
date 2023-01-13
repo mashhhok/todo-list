@@ -5,11 +5,13 @@ import { TodoItemContainer } from "./todoItem.styles";
 import { ControlElemsContainer } from "./todoItem.styles";
 import { StyledInput } from "./todoItem.styles";
 
-import DoneIcon from "@mui/icons-material/Done";
+import TaskAltIcon from "@mui/icons-material/TaskAlt";
 import DeleteIcon from "@mui/icons-material/Delete";
 import EditIcon from "@mui/icons-material/Edit";
 
 interface TodoItemProps {
+  setTaskId: React.Dispatch<React.SetStateAction<number>>;
+  setModalActive: React.Dispatch<React.SetStateAction<boolean>>;
   todo: TodoI;
   todos: TodoI[];
   setTodos: any;
@@ -29,10 +31,6 @@ export const TodoItem: React.FC<TodoItemProps> = (props) => {
         };
       })
     );
-  };
-
-  const removeTodo = (id: number) => {
-    props.setTodos(props.todos.filter((todo) => todo.id !== id));
   };
 
   const editTodo = (id: number, todoItemText: string) => {
@@ -61,15 +59,26 @@ export const TodoItem: React.FC<TodoItemProps> = (props) => {
     return (
       <ControlElemsContainer>
         <span>
-          <DoneIcon
-            fontSize="small"
-            onClick={() => toggleTodo(props.todo.id)}
-          ></DoneIcon>
+          {props.todo.complete ? (
+            <TaskAltIcon
+              fontSize="small"
+              color="primary"
+              onClick={() => toggleTodo(props.todo.id)}
+            />
+          ) : (
+            <TaskAltIcon
+              fontSize="small"
+              onClick={() => toggleTodo(props.todo.id)}
+            />
+          )}
         </span>
         <span>
           <DeleteIcon
             fontSize="small"
-            onClick={() => removeTodo(props.todo.id)}
+            onClick={() => {
+              props.setModalActive(true);
+              props.setTaskId(props.todo.id);
+            }}
           ></DeleteIcon>
         </span>
         <span>

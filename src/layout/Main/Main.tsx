@@ -1,6 +1,7 @@
-import React, { useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 import { FilterTodo } from "../../components/FilterTodo/FilterTodo";
 import { InputForm } from "../../components/InputForm/InputForm";
+import { ModalWindows } from "../../components/ModalWindows/ModalWindows";
 
 import { TodoList } from "../../components/TodoList/TodoList";
 
@@ -9,7 +10,10 @@ import { TodoI } from "../../types";
 const Main = () => {
   const [todos, setTodos] = useState<TodoI[]>([]);
 
-  const [status, setStatus] = useState("All");
+  const [modalActive, setModalActive] = useState<boolean>(false);
+  const [taskId, setTaskId] = useState<number>(0);
+
+  const [status, setStatus] = useState("Active");
   const [filteredTodos, setFilteredTodos] = useState<TodoI[]>([]);
 
   const filterHandler = () => {
@@ -34,12 +38,15 @@ const Main = () => {
   //   setAllComplete(todos.filter((todo) => todo.complete === true).length);
   // }, [todos]);
 
+  const removeTodo = (id: number) => {
+    setTodos(todos.filter((todo) => todo.id !== id));
+  };
+
   const addToList = (todoItemText: string): void => {
     if (todoItemText) {
       if (todoItemText.trim().length === 0) return;
       const newTodo = { id: Date.now(), name: todoItemText, complete: false };
       setTodos([...todos, newTodo]);
-      // setAllTodos(allTodos + 1);
     } else {
       alert("please, type the text");
     }
@@ -53,11 +60,16 @@ const Main = () => {
         filteredTodos={filteredTodos}
         todos={todos}
         setTodos={setTodos}
+        setTaskId={setTaskId}
+        setModalActive={setModalActive}
       />
       <FilterTodo filteredTodos={filteredTodos} setStatus={setStatus} />
-      {/* {todos.map((todo) => (
-        <li>{todo.name}</li>
-      ))} */}
+      <ModalWindows
+        modalActive={modalActive}
+        setModalActive={setModalActive}
+        taskId={taskId}
+        removeTodo={removeTodo}
+      />
     </div>
   );
 };

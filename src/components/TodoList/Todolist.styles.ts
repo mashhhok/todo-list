@@ -10,6 +10,7 @@ export const StyleUl = styled.ul`
 
 export const StatusMessage = styled.div`
    {
+    margin-top: 16px;
     display: flex;
     justify-content: center;
     font-family: ${theme.fontFamily.helvetica};

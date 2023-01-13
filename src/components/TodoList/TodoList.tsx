@@ -5,6 +5,8 @@ import { StyleUl } from "./Todolist.styles";
 import { StatusMessage } from "./Todolist.styles";
 
 type TodoItemsList = {
+  setTaskId: React.Dispatch<React.SetStateAction<number>>;
+  setModalActive: React.Dispatch<React.SetStateAction<boolean>>;
   todos: TodoI[];
   setTodos: any;
   filteredTodos: TodoI[];
@@ -21,6 +23,8 @@ export const TodoList: React.FC<TodoItemsList> = (props) => {
             todo={todo}
             todos={props.todos}
             setTodos={props.setTodos}
+            setTaskId={props.setTaskId}
+            setModalActive={props.setModalActive}
           />
         ))}
       </StyleUl>
