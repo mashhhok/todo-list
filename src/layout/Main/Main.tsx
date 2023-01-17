@@ -38,23 +38,9 @@ const Main = () => {
   //   setAllComplete(todos.filter((todo) => todo.complete === true).length);
   // }, [todos]);
 
-  const removeTodo = (id: number) => {
-    setTodos(todos.filter((todo) => todo.id !== id));
-  };
-
-  const addToList = (todoItemText: string): void => {
-    if (todoItemText) {
-      if (todoItemText.trim().length === 0) return;
-      const newTodo = { id: Date.now(), name: todoItemText, complete: false };
-      setTodos([...todos, newTodo]);
-    } else {
-      alert("please, type the text");
-    }
-  };
-
   return (
     <div>
-      <InputForm addTodo={addToList} />
+      <InputForm />
       <TodoList
         status={status}
         filteredTodos={filteredTodos}
@@ -68,7 +54,6 @@ const Main = () => {
         modalActive={modalActive}
         setModalActive={setModalActive}
         taskId={taskId}
-        removeTodo={removeTodo}
       />
     </div>
   );

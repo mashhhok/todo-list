@@ -8,12 +8,13 @@ import { StyledInput } from "./todoItem.styles";
 import TaskAltIcon from "@mui/icons-material/TaskAlt";
 import DeleteIcon from "@mui/icons-material/Delete";
 import EditIcon from "@mui/icons-material/Edit";
+import { useAppDispatch, useAppSelector } from "../../store/hooks";
+import { todoListActions } from "../../store/todoListSlice";
 
 interface TodoItemProps {
   setTaskId: React.Dispatch<React.SetStateAction<number>>;
   setModalActive: React.Dispatch<React.SetStateAction<boolean>>;
   todo: TodoI;
-  todos: TodoI[];
   setTodos: any;
 }
 
@@ -21,21 +22,12 @@ export const TodoItem: React.FC<TodoItemProps> = (props) => {
   const [isEditingID, setIsEditingID] = useState<number>(0);
   const [editingText, setEditingText] = useState<string>(props.todo.name);
 
-  const toggleTodo = (id: number) => {
-    props.setTodos(
-      props.todos.map((todo) => {
-        if (todo.id !== id) return todo;
-        return {
-          ...todo,
-          complete: !todo.complete,
-        };
-      })
-    );
-  };
+  const dispatch = useAppDispatch();
+  const todoList = useAppSelector((state) => state.todos.todoList);
 
   const editTodo = (id: number, todoItemText: string) => {
     props.setTodos(
-      props.todos.map((todo) => {
+      todoList.map((todo) => {
         if (todo.id !== id) return todo;
         return {
           ...todo,
@@ -43,6 +35,10 @@ export const TodoItem: React.FC<TodoItemProps> = (props) => {
         };
       })
     );
+  };
+
+  const toggleTodoHandler = (id: number) => {
+    dispatch(todoListActions.toggleTodo(id));
   };
 
   const changeHandler = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -63,12 +59,12 @@ export const TodoItem: React.FC<TodoItemProps> = (props) => {
             <TaskAltIcon
               fontSize="small"
               color="primary"
-              onClick={() => toggleTodo(props.todo.id)}
+              onClick={() => toggleTodoHandler(props.todo.id)}
             />
           ) : (
             <TaskAltIcon
               fontSize="small"
-              onClick={() => toggleTodo(props.todo.id)}
+              onClick={() => toggleTodoHandler(props.todo.id)}
             />
           )}
         </span>

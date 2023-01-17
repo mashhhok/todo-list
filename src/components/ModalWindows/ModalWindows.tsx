@@ -5,7 +5,6 @@ interface ModalWindowsProps {
   taskId: number;
   modalActive: boolean;
   setModalActive: React.Dispatch<React.SetStateAction<boolean>>;
-  removeTodo: (id: number) => void;
 }
 
 export const ModalWindows: React.FC<ModalWindowsProps> = (props) => {
@@ -15,7 +14,6 @@ export const ModalWindows: React.FC<ModalWindowsProps> = (props) => {
         modalActive={props.modalActive}
         setModalActive={props.setModalActive}
         taskId={props.taskId}
-        removeTodo={props.removeTodo}
       />
     </>
   );
