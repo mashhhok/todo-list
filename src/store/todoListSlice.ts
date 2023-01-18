@@ -1,4 +1,4 @@
-import { createSlice, PayloadAction } from "@reduxjs/toolkit";
+import { createSlice } from "@reduxjs/toolkit";
 import { TodoI } from "../types";
 
 export interface Todos {
@@ -29,27 +29,20 @@ const todoListSlice = createSlice({
     },
     removeTodo(state, action) {
       const id = action.payload;
-      // const removeTodo = (id: number) => {
-      //   setTodos(todos.filter((todo) => todo.id !== id));
-      // };
       state.todoList = state.todoList.filter((todo) => todo.id !== id);
     },
     toggleTodo(state, action) {
-      // const toggleTodo = (id: number) => {
-      //   props.setTodos(
-      //     todoList.map((todo) => {
-      //       if (todo.id !== id) return todo;
-      //       return {
-      //         ...todo,
-      //         complete: !todo.complete,
-      //       };
-      //     })
-      //   );
-      // };
       const id = action.payload;
       const todo = state.todoList.find((todo) => todo.id === id);
       if (todo) {
         todo.complete = !todo.complete;
+      }
+    },
+    updateTodo(state, action) {
+      const { id, newText } = action.payload;
+      const todo = state.todoList.find((todo) => todo.id === id);
+      if (todo) {
+        todo.name = newText;
       }
     },
   },

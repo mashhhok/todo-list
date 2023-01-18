@@ -15,7 +15,6 @@ interface TodoItemProps {
   setTaskId: React.Dispatch<React.SetStateAction<number>>;
   setModalActive: React.Dispatch<React.SetStateAction<boolean>>;
   todo: TodoI;
-  setTodos: any;
 }
 
 export const TodoItem: React.FC<TodoItemProps> = (props) => {
@@ -23,19 +22,6 @@ export const TodoItem: React.FC<TodoItemProps> = (props) => {
   const [editingText, setEditingText] = useState<string>(props.todo.name);
 
   const dispatch = useAppDispatch();
-  const todoList = useAppSelector((state) => state.todos.todoList);
-
-  const editTodo = (id: number, todoItemText: string) => {
-    props.setTodos(
-      todoList.map((todo) => {
-        if (todo.id !== id) return todo;
-        return {
-          ...todo,
-          name: todoItemText,
-        };
-      })
-    );
-  };
 
   const toggleTodoHandler = (id: number) => {
     dispatch(todoListActions.toggleTodo(id));
@@ -47,7 +33,10 @@ export const TodoItem: React.FC<TodoItemProps> = (props) => {
 
   const submitHandler = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-    editTodo(props.todo.id, editingText);
+    dispatch(
+      todoListActions.updateTodo({ id: props.todo.id, newText: editingText })
+    );
+    // editTodo(props.todo.id, editingText);
     setIsEditingID(0);
   };
 

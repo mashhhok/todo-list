@@ -2,10 +2,12 @@ import { createSlice } from "@reduxjs/toolkit";
 
 interface uiState {
   isVisibleModal: boolean;
+  status: string;
 }
 
 const initialState: uiState = {
   isVisibleModal: false,
+  status: "",
 };
 
 const uiSlice = createSlice({
