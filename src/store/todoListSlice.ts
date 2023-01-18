@@ -3,16 +3,21 @@ import { TodoI } from "../types";
 
 export interface Todos {
   todoList: TodoI[];
+  changed: boolean;
 }
 
 const initialState: Todos = {
   todoList: [],
+  changed: false,
 };
 
 const todoListSlice = createSlice({
   name: "todo",
   initialState,
   reducers: {
+    replaceTodoList(state, action) {
+      state.todoList = action.payload.todoList;
+    },
     addTodo(state, action) {
       const newTodo: TodoI = {
         id: Date.now(),
@@ -20,6 +25,7 @@ const todoListSlice = createSlice({
         complete: false,
         description: "",
       };
+      state.changed = true;
       if (!action.payload.newTodo) {
         if (newTodo.name.trim().length === 0) return;
         state.todoList.push(newTodo);
@@ -29,11 +35,13 @@ const todoListSlice = createSlice({
     },
     removeTodo(state, action) {
       const id = action.payload;
+      state.changed = true;
       state.todoList = state.todoList.filter((todo) => todo.id !== id);
     },
     toggleTodo(state, action) {
       const id = action.payload;
       const todo = state.todoList.find((todo) => todo.id === id);
+      state.changed = true;
       if (todo) {
         todo.complete = !todo.complete;
       }
@@ -41,6 +49,7 @@ const todoListSlice = createSlice({
     updateTodo(state, action) {
       const { id, newText } = action.payload;
       const todo = state.todoList.find((todo) => todo.id === id);
+      state.changed = true;
       if (todo) {
         todo.name = newText;
       }
@@ -48,6 +57,19 @@ const todoListSlice = createSlice({
   },
 });
 
+// export const extraReducers = {
+//   [fetchData.pending]: (state) => {
+//       state.loading = true;
+//   },
+//   [fetchData.fulfilled]: (state, action) => {
+//       state.loading = false;
+//       state.products = action.payload;
+//   },
+//   [fetchData.rejected]: (state) => {
+//       state.loading = false;
+//       state.error = true;
+//   },
+// };
 export const todoListActions = todoListSlice.actions;
 
 export default todoListSlice;

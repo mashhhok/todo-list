@@ -9,7 +9,8 @@ import TaskAltIcon from "@mui/icons-material/TaskAlt";
 import DeleteIcon from "@mui/icons-material/Delete";
 import EditIcon from "@mui/icons-material/Edit";
 import { useAppDispatch, useAppSelector } from "../../store/hooks";
-import { todoListActions } from "../../store/todoListSlice";
+import { todoListActions, Todos } from "../../store/todoListSlice";
+import { sendTodoListData } from "../../store/todoList-actions";
 
 interface TodoItemProps {
   setTaskId: React.Dispatch<React.SetStateAction<number>>;
@@ -21,6 +22,7 @@ export const TodoItem: React.FC<TodoItemProps> = (props) => {
   const [isEditingID, setIsEditingID] = useState<number>(0);
   const [editingText, setEditingText] = useState<string>(props.todo.name);
 
+  const todoList = useAppSelector((state) => state.todos.todoList);
   const dispatch = useAppDispatch();
 
   const toggleTodoHandler = (id: number) => {
@@ -39,6 +41,10 @@ export const TodoItem: React.FC<TodoItemProps> = (props) => {
     // editTodo(props.todo.id, editingText);
     setIsEditingID(0);
   };
+
+  // const updateTodoHandler = (todoList: TodoI[]) => {
+  //   dispatch(sendTodoListData(todoList));
+  // };
 
   const getControlElems = () => {
     return (

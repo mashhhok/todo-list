@@ -5,9 +5,14 @@ import { ModalWindows } from "../../components/ModalWindows/ModalWindows";
 
 import { TodoList } from "../../components/TodoList/TodoList";
 import { useAppDispatch, useAppSelector } from "../../store/hooks";
-import { sendTodoListData } from "../../store/todoList-actions";
+import {
+  fetchTodoListData,
+  sendTodoListData,
+} from "../../store/todoList-actions";
 
 import { TodoI } from "../../types";
+
+let isInitial = true;
 
 const Main = () => {
   const [modalActive, setModalActive] = useState<boolean>(false);
@@ -16,8 +21,9 @@ const Main = () => {
   const [status, setStatus] = useState("Active");
   const [filteredTodos, setFilteredTodos] = useState<TodoI[]>([]);
 
+  const { todoList, changed } = useAppSelector((state) => state.todos);
+
   const dispatch = useAppDispatch();
-  const todoList = useAppSelector((state) => state.todos.todoList);
 
   const filterHandler = () => {
     switch (status) {
@@ -37,10 +43,21 @@ const Main = () => {
     filterHandler();
   }, [todoList, status]);
 
-  // not working!
-  // useEffect(() => {
-  //   dispatch(sendTodoListData(todoList));
-  // }, [dispatch, todoList]);
+  // Get data from data base
+  useEffect(() => {
+    dispatch(fetchTodoListData());
+  }, [dispatch]);
+
+  // Send data to data base
+  useEffect(() => {
+    if (isInitial) {
+      isInitial = false;
+      return;
+    }
+    if (changed) {
+      dispatch(sendTodoListData(todoList));
+    }
+  }, [dispatch, todoList]);
 
   return (
     <div>
