@@ -1,3 +1,5 @@
+import { useAppDispatch } from "../../../store/hooks";
+import { todoListActions } from "../../../store/todoListSlice";
 import { ModalWindow } from "../ModalWindow";
 import {
   BtnContainer,
@@ -11,12 +13,17 @@ interface DeleteConfiramtionProps {
   taskId: number;
   modalActive: boolean;
   setModalActive: React.Dispatch<React.SetStateAction<boolean>>;
-  removeTodo: (id: number) => void;
 }
 
 export const DeleteConfirmation: React.FC<DeleteConfiramtionProps> = (
   props
 ) => {
+  const dispatch = useAppDispatch();
+
+  const removeHandler = (id: number) => {
+    dispatch(todoListActions.removeTodo(id));
+  };
+
   return (
     <ModalWindow
       modalActive={props.modalActive}
@@ -32,7 +39,8 @@ export const DeleteConfirmation: React.FC<DeleteConfiramtionProps> = (
         </CancelBtn>
         <ConfirmBtn
           onClick={() => {
-            props.removeTodo(props.taskId);
+            // props.removeTodo(props.taskId);
+            removeHandler(props.taskId);
             props.setModalActive(false);
           }}
         >

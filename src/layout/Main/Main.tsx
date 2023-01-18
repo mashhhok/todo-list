@@ -4,71 +4,75 @@ import { InputForm } from "../../components/InputForm/InputForm";
 import { ModalWindows } from "../../components/ModalWindows/ModalWindows";
 
 import { TodoList } from "../../components/TodoList/TodoList";
+import { useAppDispatch, useAppSelector } from "../../store/hooks";
+import {
+  fetchTodoListData,
+  sendTodoListData,
+} from "../../store/todoList-actions";
 
 import { TodoI } from "../../types";
 
-const Main = () => {
-  const [todos, setTodos] = useState<TodoI[]>([]);
+let isInitial = true;
 
+const Main = () => {
   const [modalActive, setModalActive] = useState<boolean>(false);
   const [taskId, setTaskId] = useState<number>(0);
 
   const [status, setStatus] = useState("Active");
   const [filteredTodos, setFilteredTodos] = useState<TodoI[]>([]);
 
+  const { todoList, changed } = useAppSelector((state) => state.todos);
+
+  const dispatch = useAppDispatch();
+
   const filterHandler = () => {
     switch (status) {
       case "Completed":
-        setFilteredTodos(todos.filter((todo) => todo.complete === true));
+        setFilteredTodos(todoList.filter((todo) => todo.complete === true));
         break;
       case "Active":
-        setFilteredTodos(todos.filter((todo) => todo.complete === false));
+        setFilteredTodos(todoList.filter((todo) => todo.complete === false));
         break;
       default:
-        setFilteredTodos(todos);
+        setFilteredTodos(todoList);
         break;
     }
   };
 
   useEffect(() => {
     filterHandler();
-  }, [todos, status]);
+  }, [todoList, status]);
 
-  // useEffect(() => {
-  //   setAllComplete(todos.filter((todo) => todo.complete === true).length);
-  // }, [todos]);
+  // Get data from data base
+  useEffect(() => {
+    dispatch(fetchTodoListData());
+  }, [dispatch]);
 
-  const removeTodo = (id: number) => {
-    setTodos(todos.filter((todo) => todo.id !== id));
-  };
-
-  const addToList = (todoItemText: string): void => {
-    if (todoItemText) {
-      if (todoItemText.trim().length === 0) return;
-      const newTodo = { id: Date.now(), name: todoItemText, complete: false };
-      setTodos([...todos, newTodo]);
-    } else {
-      alert("please, type the text");
+  // Send data to data base
+  useEffect(() => {
+    if (isInitial) {
+      isInitial = false;
+      return;
     }
-  };
+    if (changed) {
+      dispatch(sendTodoListData(todoList));
+    }
+  }, [dispatch, todoList]);
 
   return (
     <div>
-      <InputForm addTodo={addToList} />
+      <InputForm />
       <TodoList
         status={status}
-        filteredTodos={filteredTodos}
-        todos={todos}
-        setTodos={setTodos}
         setTaskId={setTaskId}
+        filteredTodos={filteredTodos}
         setModalActive={setModalActive}
       />
       <FilterTodo filteredTodos={filteredTodos} setStatus={setStatus} />
       <ModalWindows
+        taskId={taskId}
         modalActive={modalActive}
         setModalActive={setModalActive}
-        taskId={taskId}
-        removeTodo={removeTodo}
       />
     </div>
   );

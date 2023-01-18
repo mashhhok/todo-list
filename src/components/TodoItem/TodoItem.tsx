@@ -8,41 +8,25 @@ import { StyledInput } from "./todoItem.styles";
 import TaskAltIcon from "@mui/icons-material/TaskAlt";
 import DeleteIcon from "@mui/icons-material/Delete";
 import EditIcon from "@mui/icons-material/Edit";
+import { useAppDispatch, useAppSelector } from "../../store/hooks";
+import { todoListActions, Todos } from "../../store/todoListSlice";
+import { sendTodoListData } from "../../store/todoList-actions";
 
 interface TodoItemProps {
   setTaskId: React.Dispatch<React.SetStateAction<number>>;
   setModalActive: React.Dispatch<React.SetStateAction<boolean>>;
   todo: TodoI;
-  todos: TodoI[];
-  setTodos: any;
 }
 
 export const TodoItem: React.FC<TodoItemProps> = (props) => {
   const [isEditingID, setIsEditingID] = useState<number>(0);
   const [editingText, setEditingText] = useState<string>(props.todo.name);
 
-  const toggleTodo = (id: number) => {
-    props.setTodos(
-      props.todos.map((todo) => {
-        if (todo.id !== id) return todo;
-        return {
-          ...todo,
-          complete: !todo.complete,
-        };
-      })
-    );
-  };
+  const todoList = useAppSelector((state) => state.todos.todoList);
+  const dispatch = useAppDispatch();
 
-  const editTodo = (id: number, todoItemText: string) => {
-    props.setTodos(
-      props.todos.map((todo) => {
-        if (todo.id !== id) return todo;
-        return {
-          ...todo,
-          name: todoItemText,
-        };
-      })
-    );
+  const toggleTodoHandler = (id: number) => {
+    dispatch(todoListActions.toggleTodo(id));
   };
 
   const changeHandler = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -51,9 +35,16 @@ export const TodoItem: React.FC<TodoItemProps> = (props) => {
 
   const submitHandler = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-    editTodo(props.todo.id, editingText);
+    dispatch(
+      todoListActions.updateTodo({ id: props.todo.id, newText: editingText })
+    );
+    // editTodo(props.todo.id, editingText);
     setIsEditingID(0);
   };
+
+  // const updateTodoHandler = (todoList: TodoI[]) => {
+  //   dispatch(sendTodoListData(todoList));
+  // };
 
   const getControlElems = () => {
     return (
@@ -63,12 +54,12 @@ export const TodoItem: React.FC<TodoItemProps> = (props) => {
             <TaskAltIcon
               fontSize="small"
               color="primary"
-              onClick={() => toggleTodo(props.todo.id)}
+              onClick={() => toggleTodoHandler(props.todo.id)}
             />
           ) : (
             <TaskAltIcon
               fontSize="small"
-              onClick={() => toggleTodo(props.todo.id)}
+              onClick={() => toggleTodoHandler(props.todo.id)}
             />
           )}
         </span>
