@@ -1,12 +1,7 @@
 import React, { createRef, useState } from "react";
 import { useDispatch } from "react-redux";
 import { todoListActions } from "../../store/todoListSlice";
-import { TodoI } from "../../types";
 import { InputToDo } from "./inputForm.styles";
-
-// export interface FormProps {
-//   addTodo: (inputValue: string) => void;
-// }
 
 export const InputForm: React.FC = () => {
   const [value, setValue] = useState("");
@@ -22,7 +17,6 @@ export const InputForm: React.FC = () => {
   const submitHandler = (event: React.FormEvent) => {
     event.preventDefault();
     addTodo(value);
-    // props.addTodo(value);
     setValue("");
   };
 

@@ -2,19 +2,18 @@ import React, { useState } from "react";
 import { TodoI } from "../../types";
 
 import { TodoItemContainer } from "./todoItem.styles";
-import { ControlElemsContainer } from "./todoItem.styles";
+import { ControlElementsContainer } from "./todoItem.styles";
 import { StyledInput } from "./todoItem.styles";
 
 import TaskAltIcon from "@mui/icons-material/TaskAlt";
 import DeleteIcon from "@mui/icons-material/Delete";
 import EditIcon from "@mui/icons-material/Edit";
-import { useAppDispatch, useAppSelector } from "../../store/hooks";
-import { todoListActions, Todos } from "../../store/todoListSlice";
-import { sendTodoListData } from "../../store/todoList-actions";
+import { useAppDispatch } from "../../store/hooks";
+import { todoListActions } from "../../store/todoListSlice";
+import { uiActions } from "../../store/uiSlice";
 
 interface TodoItemProps {
   setTaskId: React.Dispatch<React.SetStateAction<number>>;
-  setModalActive: React.Dispatch<React.SetStateAction<boolean>>;
   todo: TodoI;
 }
 
@@ -22,7 +21,6 @@ export const TodoItem: React.FC<TodoItemProps> = (props) => {
   const [isEditingID, setIsEditingID] = useState<number>(0);
   const [editingText, setEditingText] = useState<string>(props.todo.name);
 
-  const todoList = useAppSelector((state) => state.todos.todoList);
   const dispatch = useAppDispatch();
 
   const toggleTodoHandler = (id: number) => {
@@ -38,17 +36,16 @@ export const TodoItem: React.FC<TodoItemProps> = (props) => {
     dispatch(
       todoListActions.updateTodo({ id: props.todo.id, newText: editingText })
     );
-    // editTodo(props.todo.id, editingText);
     setIsEditingID(0);
   };
 
-  // const updateTodoHandler = (todoList: TodoI[]) => {
-  //   dispatch(sendTodoListData(todoList));
-  // };
+  const toggleModalWindowHandler = () => {
+    dispatch(uiActions.toggleWindow());
+  };
 
-  const getControlElems = () => {
+  const getControlElements = () => {
     return (
-      <ControlElemsContainer>
+      <ControlElementsContainer>
         <span>
           {props.todo.complete ? (
             <TaskAltIcon
@@ -67,7 +64,7 @@ export const TodoItem: React.FC<TodoItemProps> = (props) => {
           <DeleteIcon
             fontSize="small"
             onClick={() => {
-              props.setModalActive(true);
+              toggleModalWindowHandler();
               props.setTaskId(props.todo.id);
             }}
           ></DeleteIcon>
@@ -78,7 +75,7 @@ export const TodoItem: React.FC<TodoItemProps> = (props) => {
             onClick={() => setIsEditingID(props.todo.id)}
           ></EditIcon>
         </span>
-      </ControlElemsContainer>
+      </ControlElementsContainer>
     );
   };
 
@@ -100,7 +97,7 @@ export const TodoItem: React.FC<TodoItemProps> = (props) => {
           </span>
         )}
       </li>
-      {getControlElems()}
+      {getControlElements()}
     </TodoItemContainer>
   );
 };

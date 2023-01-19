@@ -15,7 +15,7 @@ export const TodoItemContainer = styled.div`
   }
 `;
 
-export const ControlElemsContainer = styled.div`
+export const ControlElementsContainer = styled.div`
    {
     display: flex;
     align-items: center;

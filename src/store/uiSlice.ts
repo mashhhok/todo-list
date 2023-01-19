@@ -1,21 +1,19 @@
 import { createSlice } from "@reduxjs/toolkit";
 
 interface uiState {
-  isVisibleModal: boolean;
-  status: string;
+  modalIsVisible: boolean;
 }
 
 const initialState: uiState = {
-  isVisibleModal: false,
-  status: "",
+  modalIsVisible: false,
 };
 
 const uiSlice = createSlice({
   name: "ui",
   initialState,
   reducers: {
-    showModal(state, action) {
-      state.isVisibleModal = !action.payload.status;
+    toggleWindow(state) {
+      state.modalIsVisible = !state.modalIsVisible;
     },
   },
 });

@@ -15,7 +15,6 @@ import { TodoI } from "../../types";
 let isInitial = true;
 
 const Main = () => {
-  const [modalActive, setModalActive] = useState<boolean>(false);
   const [taskId, setTaskId] = useState<number>(0);
 
   const [status, setStatus] = useState("Active");
@@ -24,6 +23,7 @@ const Main = () => {
   const { todoList, changed } = useAppSelector((state) => state.todos);
 
   const dispatch = useAppDispatch();
+  const modalIsVisible = useAppSelector((state) => state.ui.modalIsVisible);
 
   const filterHandler = () => {
     switch (status) {
@@ -39,6 +39,7 @@ const Main = () => {
     }
   };
 
+  // Filter todo list
   useEffect(() => {
     filterHandler();
   }, [todoList, status]);
@@ -66,14 +67,9 @@ const Main = () => {
         status={status}
         setTaskId={setTaskId}
         filteredTodos={filteredTodos}
-        setModalActive={setModalActive}
       />
       <FilterTodo filteredTodos={filteredTodos} setStatus={setStatus} />
-      <ModalWindows
-        taskId={taskId}
-        modalActive={modalActive}
-        setModalActive={setModalActive}
-      />
+      {modalIsVisible && <ModalWindows taskId={taskId} />}
     </div>
   );
 };

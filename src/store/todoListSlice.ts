@@ -57,19 +57,6 @@ const todoListSlice = createSlice({
   },
 });
 
-// export const extraReducers = {
-//   [fetchData.pending]: (state) => {
-//       state.loading = true;
-//   },
-//   [fetchData.fulfilled]: (state, action) => {
-//       state.loading = false;
-//       state.products = action.payload;
-//   },
-//   [fetchData.rejected]: (state) => {
-//       state.loading = false;
-//       state.error = true;
-//   },
-// };
 export const todoListActions = todoListSlice.actions;
 
 export default todoListSlice;
