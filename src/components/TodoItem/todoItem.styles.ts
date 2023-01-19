@@ -5,7 +5,7 @@ export const TodoItemContainer = styled.div`
    {
     display: flex;
     flex-direction: row;
-    align-items: center;
+    // align-items: center;
     justify-content: space-between;
     color: ${theme.colors.argent};
     font-family: ${theme.fontFamily.helveticaNeue};
@@ -30,11 +30,17 @@ export const ControlElementsContainer = styled.div`
 
 export const StyledInput = styled.input`
    {
-    width: 80%;
-    font-size: 20px;
+    width: 70%;
+    font-size: 18px;
     border: none;
     box-shadow: inset 0 0 6px ${theme.colors.argent};
     border-radius: 1px;
     outline: solid ${theme.colors.argent};
+  }
+`;
+
+export const StyledSpan = styled.span`
+   {
+    font-size: 18px;
   }
 `;

@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { TodoI } from "../../types";
 
-import { TodoItemContainer } from "./todoItem.styles";
+import { StyledSpan, TodoItemContainer } from "./todoItem.styles";
 import { ControlElementsContainer } from "./todoItem.styles";
 import { StyledInput } from "./todoItem.styles";
 
@@ -31,7 +31,13 @@ export const TodoItem: React.FC<TodoItemProps> = (props) => {
     setEditingText(event.target.value);
   };
 
-  const submitHandler = (event: React.FormEvent<HTMLFormElement>) => {
+  const blurHandler = (event: React.FocusEvent<HTMLInputElement>) => {
+    event.preventDefault();
+    setEditingText(editingText);
+    setIsEditingID(0);
+  };
+
+  const submitHandler = (event: React.FormEvent<unknown>) => {
     event.preventDefault();
     dispatch(
       todoListActions.updateTodo({ id: props.todo.id, newText: editingText })
@@ -72,7 +78,7 @@ export const TodoItem: React.FC<TodoItemProps> = (props) => {
         <span>
           <EditIcon
             fontSize="small"
-            onClick={() => setIsEditingID(props.todo.id)}
+            onClick={(event) => setIsEditingID(props.todo.id)}
           ></EditIcon>
         </span>
       </ControlElementsContainer>
@@ -88,13 +94,14 @@ export const TodoItem: React.FC<TodoItemProps> = (props) => {
               type="text"
               value={editingText}
               onChange={(event) => changeHandler(event)}
+              onBlur={(event) => blurHandler(event)}
               autoFocus
             />
           </form>
         ) : (
-          <span onDoubleClick={() => setIsEditingID(props.todo.id)}>
+          <StyledSpan onDoubleClick={() => setIsEditingID(props.todo.id)}>
             {props.todo.name}
-          </span>
+          </StyledSpan>
         )}
       </li>
       {getControlElements()}
