@@ -1,18 +1,25 @@
-import React, { useState } from "react";
+import React from "react";
+import { useAppDispatch, useAppSelector } from "../../store/hooks";
+import { uiActions } from "../../store/uiSlice";
 import { StyledModalActive, StyledModalContent } from "./Modal.styles";
 
 interface ModalWindowProps {
-  modalActive: boolean;
-  setModalActive: React.Dispatch<React.SetStateAction<boolean>>;
   children?: React.ReactNode;
 }
 
 export const ModalWindow: React.FC<ModalWindowProps> = (props) => {
+  const modalIsVisible = useAppSelector((state) => state.ui.modalIsVisible);
+
+  const dispatch = useAppDispatch();
+  const toggleModalWindowHandler = () => {
+    dispatch(uiActions.toggleWindow());
+  };
+
   return (
     <>
-      {props.modalActive && (
-        <StyledModalActive onClick={() => props.setModalActive(false)}>
-          {props.modalActive ? (
+      {modalIsVisible && (
+        <StyledModalActive onClick={() => toggleModalWindowHandler()}>
+          {modalIsVisible ? (
             <StyledModalContent onClick={(e) => e.stopPropagation()}>
               {props.children}
             </StyledModalContent>
