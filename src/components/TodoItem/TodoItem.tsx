@@ -33,16 +33,18 @@ export const TodoItem: React.FC<TodoItemProps> = (props) => {
 
   const blurHandler = (event: React.FocusEvent<HTMLInputElement>) => {
     event.preventDefault();
-    setEditingText(editingText);
+    dispatch(
+      todoListActions.updateTodo({ id: props.todo.id, newText: editingText })
+    );
     setIsEditingID(0);
   };
 
   const submitHandler = (event: React.FormEvent<unknown>) => {
     event.preventDefault();
+    setIsEditingID(props.todo.id);
     dispatch(
       todoListActions.updateTodo({ id: props.todo.id, newText: editingText })
     );
-    setIsEditingID(0);
   };
 
   const toggleModalWindowHandler = () => {
@@ -78,7 +80,10 @@ export const TodoItem: React.FC<TodoItemProps> = (props) => {
         <span>
           <EditIcon
             fontSize="small"
-            onClick={(event) => setIsEditingID(props.todo.id)}
+            onClick={(event) => {
+              setIsEditingID(props.todo.id);
+              submitHandler(event);
+            }}
           ></EditIcon>
         </span>
       </ControlElementsContainer>
