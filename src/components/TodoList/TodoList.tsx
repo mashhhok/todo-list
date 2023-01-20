@@ -2,7 +2,7 @@ import React from "react";
 import { useAppSelector } from "../../store/hooks";
 import { TodoI } from "../../types";
 import { TodoItem } from "../TodoItem/TodoItem";
-import { StyleUl } from "./Todolist.styles";
+import { Dot, LoadingWrapper, StyleUl } from "./Todolist.styles";
 import { StatusMessage } from "./Todolist.styles";
 
 type TodoItemsList = {
@@ -14,6 +14,17 @@ type TodoItemsList = {
 export const TodoList: React.FC<TodoItemsList> = (props) => {
   const loading = useAppSelector((state) => state.ui.loading);
 
+  const Loading = () => {
+    return (
+      <LoadingWrapper>
+        <p>Loading data </p>
+        <Dot delay="0s"></Dot>
+        <Dot delay="0.1s"></Dot>
+        <Dot delay="0.2s"></Dot>
+      </LoadingWrapper>
+    );
+  };
+
   const getTodos = (status: string) => {
     return props.filteredTodos.length !== 0 && props.status === status ? (
       <StyleUl>
@@ -22,7 +33,7 @@ export const TodoList: React.FC<TodoItemsList> = (props) => {
         ))}
       </StyleUl>
     ) : !loading ? (
-      <StatusMessage>Loading data!...</StatusMessage>
+      <StatusMessage>{Loading()}</StatusMessage>
     ) : (
       <StatusMessage>{status} todos is empty!</StatusMessage>
     );
