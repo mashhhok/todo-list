@@ -3,13 +3,11 @@ import { createSlice } from "@reduxjs/toolkit";
 interface uiState {
   modalIsVisible: boolean;
   loading: boolean;
-  error: boolean;
 }
 
 const initialState: uiState = {
   modalIsVisible: false,
   loading: false,
-  error: false,
 };
 
 const uiSlice = createSlice({
@@ -20,8 +18,7 @@ const uiSlice = createSlice({
       state.modalIsVisible = !state.modalIsVisible;
     },
     showNotification(state, action) {
-      state.loading = !state.loading;
-      state.error = action?.payload;
+      state.loading = action.payload;
     },
   },
 });

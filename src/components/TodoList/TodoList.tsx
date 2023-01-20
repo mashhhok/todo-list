@@ -32,7 +32,7 @@ export const TodoList: React.FC<TodoItemsList> = (props) => {
           <TodoItem key={todo.id} todo={todo} setTaskId={props.setTaskId} />
         ))}
       </StyleUl>
-    ) : !loading ? (
+    ) : loading ? (
       <StatusMessage>{Loading()}</StatusMessage>
     ) : (
       <StatusMessage>{status} todos is empty!</StatusMessage>

@@ -33,7 +33,8 @@ export const sendTodoListData = createAsyncThunk(
 export const fetchTodoListData = () => {
   return async (dispatch: any) => {
     // Set loading true
-    dispatch(uiActions.showNotification(false));
+    dispatch(uiActions.showNotification(true));
+
     // I don't know which type I should pass to dispatch
     const fetchData = async () => {
       const response = await fetch(`${baseUrl}todoList.json`);
@@ -41,16 +42,18 @@ export const fetchTodoListData = () => {
         throw new Error("Could not fetch TodoList data!");
       }
       const data = await response.json();
-      dispatch(uiActions.showNotification(false));
       // Set loading false
+      dispatch(uiActions.showNotification(false));
+
       return data;
     };
     try {
       const todoListData = await fetchData();
       dispatch(todoListActions.replaceTodoList(todoListData));
     } catch (err) {
-      dispatch(uiActions.showNotification(true));
       // Set loading false
+      dispatch(uiActions.showNotification(false));
+
       console.log(err);
     }
   };
