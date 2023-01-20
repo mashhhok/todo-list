@@ -39,12 +39,13 @@ export const TodoItem: React.FC<TodoItemProps> = (props) => {
     setIsEditingID(0);
   };
 
-  const submitHandler = (event: React.FormEvent<unknown>) => {
+  const submitHandler = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     setIsEditingID(props.todo.id);
     dispatch(
       todoListActions.updateTodo({ id: props.todo.id, newText: editingText })
     );
+    setIsEditingID(0);
   };
 
   const toggleModalWindowHandler = () => {
@@ -80,9 +81,8 @@ export const TodoItem: React.FC<TodoItemProps> = (props) => {
         <span>
           <EditIcon
             fontSize="small"
-            onClick={(event) => {
+            onClick={() => {
               setIsEditingID(props.todo.id);
-              submitHandler(event);
             }}
           ></EditIcon>
         </span>
