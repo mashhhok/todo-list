@@ -2,10 +2,15 @@ import styled from "styled-components";
 
 export const Title = styled.p`
    {
-    font-size: 2.5rem;
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 2rem;
+    text-align: center;
     margin-bottom: 2rem;
     padding-bottom: 2rem;
     border-bottom: 0.2rem solid rgba(35, 33, 40, 0.15);
+    @media (max-width: 1200px) {
+      padding: 0 2rem 2rem 2rem;
+    };
   }
 `;
 
@@ -24,13 +29,16 @@ export const ConfirmationMessage = styled.p`
 export const BtnContainer = styled.div`
    {
     display: flex;
-    justify-content: flex-end;
+    justify-content: space-between;
     padding-top: 2rem;
     border-top: 0.2rem solid rgba(35, 33, 40, 0.15);
+    @media (max-width: 800px) {
+      justify-content: center;
+    };
   }
 `;
 
-export const CancelBtn = styled.button`
+export const ConfirmBtn = styled.button`
    {
     margin-left: 3.2rem;
     background-color: #ff6b6b;
@@ -39,11 +47,17 @@ export const CancelBtn = styled.button`
     &:hover {
       cursor: pointer;
       outline: 0.2rem solid rgb(35, 33, 40);
-    }
+    };
+    @media (max-width: 1200px) {
+      padding: 0.8rem;
+    };
+    @media (max-width: 800px) {
+      padding: 0.6rem;
+    };
   }
 `;
 
-export const ConfirmBtn = styled.button`
+export const CancelBtn= styled.button`
    {
     font-size: 1.6rem;
     border: none;
@@ -53,8 +67,15 @@ export const ConfirmBtn = styled.button`
     transition: 0.2s;
     &:hover {
       cursor: pointer;
+      background-color: grey;
       color: #e9ecef;
       outline: 0.2rem solid rgb(35, 33, 40);
-    }
+    };
+    @media (max-width: 1200px) {
+      padding: 0.8rem;
+    };
+    @media (max-width: 800px) {
+      padding: 0.6rem;
+    };
   }
 `;
