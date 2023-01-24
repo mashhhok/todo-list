@@ -3,6 +3,16 @@ import { TodoI } from "../../types";
 import todoListSlice, { todoListActions } from "../todoListSlice";
 
 describe("todoListSlice", () => {
+  const todosState = (list: TodoI[] = [], status = false) => {
+    const todoList = {
+      todoList: list,
+      loading: status,
+      error: null,
+      changed: false,
+    };
+    return todoList;
+  };
+
   it('should replace todo list with "replaceTodoList" action,', () => {
     const todos = [
       { id: 1, name: "test1", complete: false, description: "" },
@@ -12,10 +22,7 @@ describe("todoListSlice", () => {
       type: todoListActions.replaceTodoList.type,
       payload: { todoList: todos },
     };
-    const result = todoListSlice.reducer(
-      { todoList: [], changed: false },
-      action
-    );
+    const result = todoListSlice.reducer(todosState(), action);
     expect(result.todoList).toEqual(todos);
   });
 
@@ -25,10 +32,7 @@ describe("todoListSlice", () => {
       payload: { name: "Redux" },
     };
 
-    const result = todoListSlice.reducer(
-      { todoList: [], changed: false },
-      action
-    );
+    const result = todoListSlice.reducer(todosState(), action);
     expect(result.todoList[0].name).toBe("Redux");
     expect(result.todoList[0].complete).toBe(false);
   });
@@ -39,10 +43,7 @@ describe("todoListSlice", () => {
       payload: { name: "" },
     };
 
-    const result = todoListSlice.reducer(
-      { todoList: [], changed: false },
-      action
-    );
+    const result = todoListSlice.reducer(todosState(), action);
     expect(result.todoList[0]).toBeUndefined();
   });
 
@@ -54,10 +55,7 @@ describe("todoListSlice", () => {
       type: todoListActions.removeTodo,
       payload: 111,
     };
-    const result = todoListSlice.reducer(
-      { todoList: todos, changed: false },
-      action
-    );
+    const result = todoListSlice.reducer(todosState(todos), action);
     expect(result.todoList[0]).toEqual(undefined);
   });
 
@@ -69,10 +67,7 @@ describe("todoListSlice", () => {
       type: todoListActions.toggleTodo.type,
       payload: 111,
     };
-    const result = todoListSlice.reducer(
-      { todoList: todos, changed: false },
-      action
-    );
+    const result = todoListSlice.reducer(todosState(todos), action);
     expect(result.todoList[0].complete).toBe(true);
   });
 
@@ -88,10 +83,19 @@ describe("todoListSlice", () => {
       type: todoListActions.updateTodo,
       payload: todosToUpdate,
     };
-    const result = todoListSlice.reducer(
-      { todoList: existingTodos, changed: false },
-      action
-    );
+    const result = todoListSlice.reducer(todosState(existingTodos), action);
     expect(result.todoList[0].name).toBe(todosToUpdate.newText);
+  });
+
+  it("should set loading state to (true).", () => {
+    const action = { type: todoListActions.setLoading.type, payload: true };
+    const result = todoListSlice.reducer(todosState(), action);
+    expect(result.loading).toBe(true);
+  });
+
+  it("should set loading state to (false).", () => {
+    const action = { type: todoListActions.setLoading.type, payload: false };
+    const result = todoListSlice.reducer(todosState(), action);
+    expect(result.loading).toBe(false);
   });
 });

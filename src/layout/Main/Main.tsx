@@ -46,7 +46,7 @@ const Main = () => {
 
   // Get data from data base
   useEffect(() => {
-    dispatch(fetchTodoListData());
+    dispatch(fetchTodoListData(dispatch));
   }, [dispatch]);
 
   // Send data to data base

@@ -1,7 +1,6 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import { TodoI } from "../types";
 import { todoListActions } from "./todoListSlice";
-import { uiActions } from "./uiSlice";
 
 const baseUrl =
   "https://ts-todo-list-873d9-default-rtdb.europe-west1.firebasedatabase.app/";
@@ -30,10 +29,11 @@ export const sendTodoListData = createAsyncThunk(
 );
 
 // Get data from data base
-export const fetchTodoListData = () => {
-  return async (dispatch: any) => {
+export const fetchTodoListData = createAsyncThunk(
+  "todos/fetchTodos",
+  async (dispatch: any) => {
     // Set loading true
-    dispatch(uiActions.showNotification(true));
+    dispatch(todoListActions.setLoading(true));
 
     // I don't know which type I should pass to dispatch
     const fetchData = async () => {
@@ -43,18 +43,19 @@ export const fetchTodoListData = () => {
       }
       const data = await response.json();
       // Set loading false
-      dispatch(uiActions.showNotification(false));
+      dispatch(todoListActions.setLoading(false));
 
       return data;
     };
+
     try {
       const todoListData = await fetchData();
       dispatch(todoListActions.replaceTodoList(todoListData));
     } catch (err) {
       // Set loading false
-      dispatch(uiActions.showNotification(false));
+      dispatch(todoListActions.setLoading(false));
 
       console.log(err);
     }
-  };
-};
+  }
+);
