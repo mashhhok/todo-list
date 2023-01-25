@@ -9,19 +9,18 @@ const baseUrl =
 export const sendTodoListData = createAsyncThunk(
   "todoList/sendTodoListData",
   async (data: TodoI[]) => {
-    const sendRequest = async () => {
+    try {
       const response = await fetch(`${baseUrl}todoList.json`, {
         method: "PUT",
         body: JSON.stringify({
           todoList: data,
         }),
       });
+      const responseData = await response.json();
       if (!response.ok) {
         throw new Error("Could not send todoList data to data base!");
       }
-    };
-    try {
-      await sendRequest();
+      return responseData;
     } catch (err) {
       console.log(err);
     }
@@ -30,19 +29,18 @@ export const sendTodoListData = createAsyncThunk(
 
 // Get data from data base
 export const fetchTodoListData = createAsyncThunk(
-  "todos/fetchTodos",
+  "todoList/fetchTodoList",
   async (dispatch: any) => {
-    // Set loading true
+    // I don't know which type I should pass to dispatch
+
     dispatch(todoListActions.setLoading(true));
 
-    // I don't know which type I should pass to dispatch
     const fetchData = async () => {
       const response = await fetch(`${baseUrl}todoList.json`);
       if (!response.ok) {
         throw new Error("Could not fetch TodoList data!");
       }
       const data = await response.json();
-      // Set loading false
       dispatch(todoListActions.setLoading(false));
 
       return data;
@@ -52,7 +50,6 @@ export const fetchTodoListData = createAsyncThunk(
       const todoListData = await fetchData();
       dispatch(todoListActions.replaceTodoList(todoListData));
     } catch (err) {
-      // Set loading false
       dispatch(todoListActions.setLoading(false));
 
       console.log(err);

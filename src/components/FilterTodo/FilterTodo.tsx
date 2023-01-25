@@ -1,17 +1,16 @@
 import React from "react";
+import { useAppSelector } from "../../store/hooks";
 import { StyledButton } from "../../style";
 import { TodoI } from "../../types";
 import { FilterTodoContainer } from "./FilterTodo.styles";
 import { ItemsCounter } from "./FilterTodo.styles";
 interface FilterTodoProps {
   setStatus: any;
-  filteredTodos: TodoI[];
 }
 
 export const FilterTodo: React.FC<FilterTodoProps> = (props) => {
-  const counterCompleted = props.filteredTodos.filter(
-    (todos) => todos.complete === true
-  );
+  const todoList = useAppSelector((state) => state.todos.todoList);
+  const counterCompleted = todoList.filter((todos) => todos.complete === false);
 
   const filterTodo = () => {
     return (
@@ -29,9 +28,7 @@ export const FilterTodo: React.FC<FilterTodoProps> = (props) => {
 
   return (
     <FilterTodoContainer>
-      <ItemsCounter>
-        {props.filteredTodos.length - counterCompleted.length} items left
-      </ItemsCounter>
+      <ItemsCounter>{counterCompleted.length} items left</ItemsCounter>
       {filterTodo()}
     </FilterTodoContainer>
   );

@@ -1,4 +1,3 @@
-import React from "react";
 import { LayoutHeader } from "./header.styles";
 
 const Header = () => {

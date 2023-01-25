@@ -68,7 +68,7 @@ const Main = () => {
         setTaskId={setTaskId}
         filteredTodos={filteredTodos}
       />
-      <FilterTodo filteredTodos={filteredTodos} setStatus={setStatus} />
+      <FilterTodo setStatus={setStatus} />
       {modalIsVisible && <ModalWindows taskId={taskId} />}
     </div>
   );

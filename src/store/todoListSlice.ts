@@ -1,5 +1,4 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { stat } from "fs";
 import { TodoI } from "../types";
 import { fetchTodoListData as fetchTodos } from "./todoList-actions";
 
