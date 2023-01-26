@@ -1,8 +1,8 @@
-import styled from 'styled-components'
-import { theme } from '../../ui/src/lib/config/theme'
+import styled from "styled-components";
+import { theme } from "../../ui/src/lib/config/theme";
 
-export const LayoutHeader = styled.div` 
-  {
+export const LayoutHeader = styled.h1`
+   {
     display: flex;
     flex-direction: column;
     text-align: center;
@@ -17,4 +17,4 @@ export const LayoutHeader = styled.div`
     -moz-text-rendering: optimizeLegibility;
     text-rendering: optimizeLegibility;
   }
-`
+`;

@@ -1,7 +1,6 @@
 import React from "react";
 import { useAppSelector } from "../../store/hooks";
 import { StyledButton } from "../../style";
-import { TodoI } from "../../types";
 import { FilterTodoContainer } from "./FilterTodo.styles";
 import { ItemsCounter } from "./FilterTodo.styles";
 interface FilterTodoProps {
@@ -28,7 +27,9 @@ export const FilterTodo: React.FC<FilterTodoProps> = (props) => {
 
   return (
     <FilterTodoContainer>
-      <ItemsCounter>{counterCompleted.length} items left</ItemsCounter>
+      <ItemsCounter data-testid="test-span">
+        {counterCompleted.length} items left
+      </ItemsCounter>
       {filterTodo()}
     </FilterTodoContainer>
   );

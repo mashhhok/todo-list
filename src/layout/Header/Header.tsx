@@ -1,7 +1,11 @@
 import { LayoutHeader } from "./header.styles";
 
-const Header = () => {
-  return <LayoutHeader>ToDoList</LayoutHeader>;
+interface HeaderProps {
+  title: string;
+}
+
+const Header: React.FC<HeaderProps> = (props) => {
+  return <LayoutHeader>{props.title}</LayoutHeader>;
 };
 
 export default Header;

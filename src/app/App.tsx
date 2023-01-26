@@ -7,7 +7,7 @@ export function App() {
   return (
     <div className="App">
       <Layout>
-        <Header />
+        <Header title="ToDoList" />
         <Main />
         <Footer />
       </Layout>
