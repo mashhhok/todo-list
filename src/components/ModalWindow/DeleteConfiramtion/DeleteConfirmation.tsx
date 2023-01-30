@@ -29,9 +29,9 @@ export const DeleteConfirmation: React.FC<DeleteConfiramtionProps> = (
 
   return (
     <ModalWindow>
-      <Title>Delete confirmation</Title>
+      <Title>Delet task</Title>
       <ConfirmationMessage>
-        Are you sure you want to delete this item?
+        Are you sure you want to delete this task?
       </ConfirmationMessage>
       <BtnContainer>
         <CancelBtn onClick={() => toggleModalWindowHandler()}>Cancel</CancelBtn>
