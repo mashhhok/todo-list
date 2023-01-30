@@ -12,7 +12,7 @@ type TodoItemsList = {
 };
 
 export const TodoList: React.FC<TodoItemsList> = (props) => {
-  const loading = useAppSelector((state) => state.ui.loading);
+  const loading = useAppSelector((state) => state.todos.loading);
 
   const Loading = () => {
     return (

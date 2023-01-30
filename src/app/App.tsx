@@ -3,11 +3,11 @@ import Header from "../layout/Header/Header";
 import Main from "../layout/Main/Main";
 import { Layout } from "./app.styles";
 
-function App() {
+export function App() {
   return (
     <div className="App">
       <Layout>
-        <Header />
+        <Header title="ToDoList" />
         <Main />
         <Footer />
       </Layout>

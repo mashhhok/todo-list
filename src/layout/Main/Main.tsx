@@ -46,7 +46,7 @@ const Main = () => {
 
   // Get data from data base
   useEffect(() => {
-    dispatch(fetchTodoListData());
+    dispatch(fetchTodoListData(dispatch));
   }, [dispatch]);
 
   // Send data to data base
@@ -68,7 +68,7 @@ const Main = () => {
         setTaskId={setTaskId}
         filteredTodos={filteredTodos}
       />
-      <FilterTodo filteredTodos={filteredTodos} setStatus={setStatus} />
+      <FilterTodo setStatus={setStatus} />
       {modalIsVisible && <ModalWindows taskId={taskId} />}
     </div>
   );

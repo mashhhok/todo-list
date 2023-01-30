@@ -11,7 +11,7 @@ export const FilterTodoContainer = styled.div`
   }
 `;
 
-export const ItemsCounter = styled.div`
+export const ItemsCounter = styled.span`
    {
     font-family: ${theme.fontFamily.helvetica};
   }
