@@ -1,13 +1,14 @@
 export const MainColors = {
-  white: '#FFFFFF',
-  whiteSmoke: '#F5F5F5',
-  whiteCoffee: '#ECD9D8',
-  argent: '#BFBFBF',
-  darkLiver: '#4D4D4D',
-}
+  white: "#FFFFFF",
+  whiteSmoke: "#F5F5F5",
+  whiteCoffee: "#ECD9D8",
+  argent: "#BFBFBF",
+  darkLiver: "#4D4D4D",
+  btnConfirm: "#ff6b6b",
+};
 export const colors = {
   ...MainColors,
-}
+};
 
 export const theme = {
   colors: {
@@ -16,7 +17,7 @@ export const theme = {
     text: colors.white,
   },
   fontFamily: {
-    helvetica: 'Helvetica, sans-sarif',
-    helveticaNeue: 'Helvetica Neue, sans-sarif',
+    helvetica: "Helvetica, sans-sarif",
+    helveticaNeue: "Helvetica Neue, sans-sarif",
   },
-}
+};
