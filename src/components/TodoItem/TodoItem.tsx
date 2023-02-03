@@ -55,15 +55,17 @@ export const TodoItem: React.FC<TodoItemProps> = (props) => {
   const getControlElements = () => {
     return (
       <ControlElementsContainer>
-        <span>
+        <span data-testid="task-span">
           {props.todo.complete ? (
             <TaskAltIcon
+              data-testid="task-copmleted"
               fontSize="small"
               color="primary"
               onClick={() => toggleTodoHandler(props.todo.id)}
             />
           ) : (
             <TaskAltIcon
+              data-testid="task-not-copmleted"
               fontSize="small"
               onClick={() => toggleTodoHandler(props.todo.id)}
             />
@@ -104,7 +106,10 @@ export const TodoItem: React.FC<TodoItemProps> = (props) => {
             />
           </form>
         ) : (
-          <StyledSpan onDoubleClick={() => setIsEditingID(props.todo.id)}>
+          <StyledSpan
+            onDoubleClick={() => setIsEditingID(props.todo.id)}
+            data-testid="task-name"
+          >
             {props.todo.name}
           </StyledSpan>
         )}
